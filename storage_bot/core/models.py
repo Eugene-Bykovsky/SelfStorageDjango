@@ -3,6 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
+    name = models.CharField(max_length=200, blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
 
 class Consent(models.Model):
@@ -38,3 +39,34 @@ class StorageRate(models.Model):
 
     def __str__(self):
         return f"{self.get_volume_category_display()} - {self.cost_per_day} ₽/день"
+    
+
+class PickupLocation(models.Model):
+    address = models.CharField(verbose_name="адрес", max_length=200, blank=True)
+    latitude = models.FloatField(verbose_name="широта", null=True)
+    longitude = models.FloatField(verbose_name="долгота", null=True)
+
+    def __str__(self):
+        return f"Точка самовывоза: {self.address}"
+    
+
+class Contract(models.Model):
+    owner_name = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name='имя владельца', related_name='contracts'
+        )
+    owner_phone = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name='телефон владельца', related_name='contracts'
+        )
+    storage_rate = models.ForeignKey(
+        StorageRate, on_delete=models.CASCADE, verbose_name='тариф заказа', related_name='contracts'
+        )
+    start_date = models.DateField(null=True, verbose_name='дата начала хранения')
+    expiration_date = models.DateField(null=True, verbose_name='дата окончания хранения')
+    qr_code = models.BooleanField(default=False, verbose_name='был ли запрошен QR-код')
+    place = models.ForeignKey(
+        PickupLocation, on_delete=models.CASCADE, verbose_name='место хранения', related_name='contracts'
+        )
+    
+    def __str__(self):
+        return f'Заказ от {self.owner_name}, дата конца хранения: {self.expiration_date}'
+
