@@ -94,8 +94,8 @@ class Contract(models.Model):
     )
 
     class Meta:
-        verbose_name = "Договор хранения"
-        verbose_name_plural = "Договора хранения"
+        verbose_name = "Заказ"
+        verbose_name_plural = "Заказы"
 
     def __str__(self):
         return (f'Заказ от {self.owner_name}, дата конца хранения: '
