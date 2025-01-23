@@ -9,14 +9,7 @@ class User(AbstractUser):
 
 class Consent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    consent_text = models.TextField(
-        help_text="Я даю согласие на обработку моих персональных данных")
-    consent_file = models.FileField(
-        upload_to='consents/', blank=True, null=True,
-        help_text="PDF файл для согласия"
-    )
-    consent_given = models.BooleanField(default=False,
-                                        help_text="Пользователь дал согласие")
+    consent_given = models.BooleanField(default=False)
     given_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
