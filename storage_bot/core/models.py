@@ -6,6 +6,7 @@ class User(AbstractUser):
     name = models.CharField(max_length=200, blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
 
+
 class Consent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     consent_text = models.TextField(help_text="Я даю согласие на обработку моих персональных данных")
