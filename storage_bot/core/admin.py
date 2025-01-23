@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import StorageRate, Contract, PickupLocation
+from core.models import StorageRate, Contract, PickupLocation
 
 
 @admin.register(StorageRate)
@@ -11,10 +11,10 @@ class StorageRateAdmin(admin.ModelAdmin):
 @admin.register(Contract)
 class ContractAdmin(admin.ModelAdmin):
     list_display = (
-        'owner_name', 
-        'owner_phone', 
-        'storage_rate', 
-        'place', 
+        'owner_name',
+        'owner_phone',
+        'storage_rate',
+        'place',
         'expiration_date'
         )
     

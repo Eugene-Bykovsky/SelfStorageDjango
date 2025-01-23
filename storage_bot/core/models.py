@@ -53,10 +53,10 @@ class PickupLocation(models.Model):
 
 class Contract(models.Model):
     owner_name = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name='имя владельца', related_name='contracts'
+        User, on_delete=models.CASCADE, verbose_name='имя владельца', related_name='owner_name_contracts'
         )
     owner_phone = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name='телефон владельца', related_name='contracts'
+        User, on_delete=models.CASCADE, verbose_name='телефон владельца', related_name='owner_phone_contracts'
         )
     storage_rate = models.ForeignKey(
         StorageRate, on_delete=models.CASCADE, verbose_name='тариф заказа', related_name='contracts'
