@@ -5,6 +5,12 @@ from django.db import models
 class User(AbstractUser):
     name = models.CharField(max_length=200, blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
+    telegram_id = models.BigIntegerField(unique=True, null=True, blank=True)
+    telegram_username = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
 
 
 class Consent(models.Model):
@@ -37,7 +43,7 @@ class StorageRate(models.Model):
         verbose_name_plural = "Тарифы хранения"
 
     def __str__(self):
-        return (f"{self.get_volume_category_display()} -" 
+        return (f"{self.get_volume_category_display()} -"
                 f" {self.cost_per_day} ₽/день")
 
 

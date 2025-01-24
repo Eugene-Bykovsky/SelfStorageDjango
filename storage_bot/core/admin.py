@@ -1,5 +1,6 @@
 from django.contrib import admin
-from core.models import StorageRate, Contract, PickupLocation
+from django.contrib.auth.admin import UserAdmin
+from core.models import User, StorageRate, Contract, PickupLocation
 
 
 @admin.register(StorageRate)
@@ -24,3 +25,21 @@ class PickupLocationAdmin(admin.ModelAdmin):
     list_display = ('address',)
 
     
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    model = User
+    list_display = ('username', 'name', 'phone_number', 'telegram_id',
+                    'is_active', 'is_staff')
+    list_filter = ('is_active', 'is_staff')
+    fieldsets = UserAdmin.fieldsets + (
+        ('Дополнительная информация', {
+            'fields': ('name', 'phone_number', 'telegram_id',
+                       'telegram_username'),
+        }),
+    )
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        ('Дополнительная информация', {
+            'fields': ('name', 'phone_number', 'telegram_id',
+                       'telegram_username'),
+        }),
+    )
