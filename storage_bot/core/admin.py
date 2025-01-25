@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from core.models import User, StorageRate, Contract, PickupLocation
+from core.models import (User, StorageRate, Contract, PickupLocation,
+                         Call)
 
 
 @admin.register(StorageRate)
@@ -17,14 +18,14 @@ class ContractAdmin(admin.ModelAdmin):
         'storage_rate',
         'place',
         'expiration_date'
-        )
-    
+    )
+
 
 @admin.register(PickupLocation)
 class PickupLocationAdmin(admin.ModelAdmin):
     list_display = ('address',)
 
-    
+
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     model = User
@@ -43,3 +44,10 @@ class CustomUserAdmin(UserAdmin):
                        'telegram_username'),
         }),
     )
+
+
+@admin.register(Call)
+class CallAdmin(admin.ModelAdmin):
+    list_display = ('user', 'call_type', 'requested_at', 'processed')
+    list_filter = ('call_type', 'processed')
+    search_fields = ('user__username', 'user__telegram_id')

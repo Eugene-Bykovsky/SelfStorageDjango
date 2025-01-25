@@ -101,3 +101,38 @@ class Contract(models.Model):
     def __str__(self):
         return (f'Заказ от {self.owner_name}, дата конца хранения: '
                 f'{self.expiration_date}')
+
+
+class Call(models.Model):
+    CALL_TYPE_CHOICES = [
+        ('admin', 'Звонок администратору'),
+        ('courier', 'Звонок курьеру'),
+    ]
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Пользователь",
+        related_name="calls"
+    )
+    call_type = models.CharField(
+        max_length=10,
+        choices=CALL_TYPE_CHOICES,
+        verbose_name="Тип звонка"
+    )
+    requested_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата и время запроса"
+    )
+    processed = models.BooleanField(
+        default=False,
+        verbose_name="Обработан ли запрос"
+    )
+
+    class Meta:
+        verbose_name = "Запрос на звонок"
+        verbose_name_plural = "Запросы на звонки"
+
+    def __str__(self):
+        return (f"Звонок от {self.user} - {self.get_call_type_display()} "
+                f"({self.requested_at.strftime('%Y-%m-%d %H:%M')})")
