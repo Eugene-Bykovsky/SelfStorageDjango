@@ -2,10 +2,11 @@ from rest_framework.filters import SearchFilter
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from core.models import User, Consent, StorageRate, PickupLocation, Contract
+from core.models import (User, Consent, StorageRate, PickupLocation, Contract,
+                         Call)
 from api.serializers import (
     UserSerializer, ConsentSerializer, StorageRateSerializer,
-    PickupLocationSerializer, ContractSerializer
+    PickupLocationSerializer, ContractSerializer, CallSerializer
 )
 from django.utils.timezone import now
 
@@ -43,3 +44,8 @@ class ContractViewSet(ModelViewSet):
             expiration_date__lt=now().date())
         serializer = self.get_serializer(expired_contracts, many=True)
         return Response(serializer.data)
+
+
+class CallViewSet(ModelViewSet):
+    queryset = Call.objects.all()
+    serializer_class = CallSerializer

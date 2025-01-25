@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from core.models import User, Consent, StorageRate, PickupLocation, Contract
+from core.models import (User, Consent, StorageRate, PickupLocation, Contract,
+                         Call)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -61,3 +62,9 @@ class ContractSerializer(serializers.ModelSerializer):
             'id', 'owner_name', 'owner_phone', 'storage_rate',
             'start_date', 'expiration_date', 'qr_code', 'place'
         ]
+
+
+class CallSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Call
+        fields = '__all__'
