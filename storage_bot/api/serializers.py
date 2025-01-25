@@ -6,7 +6,7 @@ from core.models import (User, Consent, StorageRate, PickupLocation, Contract,
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'name', 'phone_number', 'telegram_id',
+        fields = ['id', 'username', 'name', 'phone_number', 'telegram_id',
                   'telegram_username', 'is_active']
 
     def create(self, validated_data):
