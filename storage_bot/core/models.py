@@ -91,6 +91,8 @@ class Contract(models.Model):
         verbose_name='место хранения',
         related_name='contracts'
     )
+    content = models.TextField(max_length=200, blank=True,
+                               verbose_name="вещи на хранении")
 
     class Meta:
         verbose_name = "Заказ"
