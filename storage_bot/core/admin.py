@@ -14,7 +14,6 @@ class StorageRateAdmin(admin.ModelAdmin):
 class ContractAdmin(admin.ModelAdmin):
     list_display = (
         'owner_name',
-        'owner_phone',
         'storage_rate',
         'place',
         'expiration_date'

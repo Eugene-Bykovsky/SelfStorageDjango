@@ -59,7 +59,7 @@ class ContractSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contract
         fields = [
-            'id', 'owner_name', 'owner_phone', 'storage_rate',
+            'id', 'owner_name', 'storage_rate',
             'start_date', 'expiration_date', 'qr_code', 'place'
         ]
 

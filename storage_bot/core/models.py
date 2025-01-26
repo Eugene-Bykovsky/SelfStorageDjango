@@ -70,11 +70,6 @@ class Contract(models.Model):
         verbose_name='имя владельца',
         related_name='owner_name_contracts'
     )
-    owner_phone = models.ForeignKey(
-        User, on_delete=models.CASCADE,
-        verbose_name='телефон владельца',
-        related_name='owner_phone_contracts'
-    )
     storage_rate = models.ForeignKey(
         StorageRate, on_delete=models.CASCADE,
         verbose_name='тариф хранения',
