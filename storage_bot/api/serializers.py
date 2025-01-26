@@ -55,12 +55,15 @@ class PickupLocationSerializer(serializers.ModelSerializer):
 
 class ContractSerializer(serializers.ModelSerializer):
     storage_rate = StorageRateSerializer(read_only=True)
+    place_address = serializers.CharField(source='place.address',
+                                          read_only=True)
 
     class Meta:
         model = Contract
         fields = [
             'id', 'owner_name', 'storage_rate',
-            'start_date', 'expiration_date', 'qr_code', 'place'
+            'start_date', 'expiration_date', 'qr_code',
+            'place', 'place_address', 'content'
         ]
 
 
