@@ -123,6 +123,8 @@ class Call(models.Model):
         default=False,
         verbose_name="Обработан ли запрос"
     )
+    pre_order = models.TextField(max_length=200, blank=True, null=True,
+                                 verbose_name="Предзаказ")
 
     class Meta:
         verbose_name = "Запрос на звонок"
