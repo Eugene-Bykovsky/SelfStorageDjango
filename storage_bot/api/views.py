@@ -2,6 +2,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 from core.models import (User, Consent, StorageRate, PickupLocation, Contract,
                          Call)
 from api.serializers import (
@@ -36,6 +37,8 @@ class PickupLocationViewSet(ModelViewSet):
 class ContractViewSet(ModelViewSet):
     queryset = Contract.objects.all()
     serializer_class = ContractSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['owner_name']
 
     @action(detail=False, methods=['get'])
     def expired(self, request):
