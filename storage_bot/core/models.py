@@ -133,3 +133,15 @@ class Call(models.Model):
     def __str__(self):
         return (f"Звонок от {self.user} - {self.get_call_type_display()} "
                 f"({self.requested_at.strftime('%Y-%m-%d %H:%M')})")
+
+
+class AdLink(models.Model):
+    link = models.URLField(unique=True)
+    clicks_count = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Переход по ссылке"
+        verbose_name_plural = "Переходы по ссылкам"
+
+    def __str__(self):
+        return self.link

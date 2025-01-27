@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from core.models import (User, StorageRate, Contract, PickupLocation,
-                         Call)
+                         Call, AdLink)
 from datetime import date
 from django.utils.safestring import mark_safe
 
@@ -81,3 +81,9 @@ class CallAdmin(admin.ModelAdmin):
                     'pre_order')
     list_filter = ('call_type', 'processed')
     search_fields = ('user__username', 'user__telegram_id')
+
+
+@admin.register(AdLink)
+class AdLinkAdmin(admin.ModelAdmin):
+    list_display = ('link', 'clicks_count')
+    search_fields = ('link',)
