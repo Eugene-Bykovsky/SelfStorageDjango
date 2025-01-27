@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from rest_framework.filters import SearchFilter
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
@@ -46,6 +48,15 @@ class ContractViewSet(ModelViewSet):
         expired_contracts = self.queryset.filter(
             expiration_date__lt=now().date())
         serializer = self.get_serializer(expired_contracts, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def expiring_in_14_days(self, request):
+        """Список заказов, у которых срок аренды заканчивается через 14 дней"""
+        today = now().date()
+        reminder_date = today + timedelta(days=14)
+        contracts_in_14_days = self.queryset.filter(expiration_date=reminder_date)
+        serializer = self.get_serializer(contracts_in_14_days, many=True)
         return Response(serializer.data)
 
 
