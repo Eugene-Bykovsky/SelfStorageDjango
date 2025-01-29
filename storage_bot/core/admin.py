@@ -4,6 +4,8 @@ from core.models import (User, StorageRate, Contract, PickupLocation,
                          Call, AdLink)
 from datetime import date
 from django.utils.safestring import mark_safe
+from core.utils import get_clicks_count
+from asgiref.sync import async_to_sync
 
 
 @admin.register(StorageRate)
@@ -87,3 +89,16 @@ class CallAdmin(admin.ModelAdmin):
 class AdLinkAdmin(admin.ModelAdmin):
     list_display = ('link', 'clicks_count')
     search_fields = ('link',)
+
+    def get_queryset(self, request):
+        """
+        Обновление статистики переходов при загрузке списка объектов.
+        """
+        queryset = super().get_queryset(request)
+
+        # Обновляем статистику для всех объектов
+        for ad_link in queryset:
+            ad_link.clicks_count = async_to_sync(get_clicks_count)(ad_link.link)
+            ad_link.save()
+
+        return queryset

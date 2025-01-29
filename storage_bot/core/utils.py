@@ -16,13 +16,24 @@ async def get_clicks_count(link):
             "access_token": VK_API_TOKEN,
             "v": "5.131",
             "key": short_key,
+            "interval": "day",
         }
 
-        async with session.get(f"{VK_API_BASE_URL}/utils.getLinkStats",
-                               params=params) as response:
-            data = await response.json()
+        try:
+            async with session.get(f"{VK_API_BASE_URL}/utils.getLinkStats",
+                                   params=params) as response:
+                data = await response.json()
+                print(data)
 
-            if "response" in data:
-                return data["response"]["stats"][-1]["views"]
-            else:
-                return 0
+                stats = data.get("response", {}).get("stats", [])
+
+                if not stats:
+                    return 0  # Если stats пустой, возвращаем 0
+
+                return stats[-1].get("views", 0)
+        except aiohttp.ClientError as e:
+            print(f"Ошибка при запросе к VK API: {e}")
+            return 0
+        except Exception as e:
+            print(f"Неожиданная ошибка: {e}")
+            return 0

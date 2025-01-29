@@ -140,8 +140,8 @@ class AdLink(models.Model):
     clicks_count = models.PositiveIntegerField(default=0)
 
     class Meta:
-        verbose_name = "Переход по ссылке"
-        verbose_name_plural = "Переходы по ссылкам"
+        verbose_name = "Рекламная ссылка"
+        verbose_name_plural = "Рекламные ссылки"
 
     def __str__(self):
         return self.link
